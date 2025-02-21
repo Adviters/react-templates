@@ -1,13 +1,17 @@
 {
-  "name": "templates-poc",
+  "name": "react-templates-dnd",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Adviters/react-templates.git"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -17,11 +21,9 @@
     "fabric": "^6.6.1",
     "final-form": "^4.20.10",
     "final-form-arrays": "^3.1.0",
-    "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9"
   },
   "devDependencies": {
@@ -36,5 +38,9 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
