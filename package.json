@@ -1,8 +1,14 @@
 {
   "name": "react-templates-dnd",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "1.0.1",
   "type": "module",
+  "main": "dist/react-templates-dnd.umd.js",
+  "module": "dist/react-templates-dnd.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -37,7 +43,8 @@
     "globals": "^15.14.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
