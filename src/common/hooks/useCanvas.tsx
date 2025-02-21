@@ -25,8 +25,6 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
       setRedoHistory([]);
     }
   };
-  console.log(canvasHistory);
-  console.log(redoHistory);
 
   const handleUndo = async () => {
     if (canvasHistory.length === 1) return;
@@ -57,7 +55,6 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
       canvas.clear();
       await canvas.loadFromJSON(nextState);
 
-      //const currentState = canvasHistory[canvasHistory.length - 1];
       setCanvasHistory((prevHistory) => [...prevHistory, nextState]);
 
       setRedoHistory((prevRedo) => prevRedo.slice(1));
@@ -92,41 +89,6 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
     reader.readAsDataURL(file);
   };
 
-  const handleExport = (content: string) => {
-    const element = document.createElement("a");
-    const file = new Blob([content], { type: "text/html" });
-    element.href = URL.createObjectURL(file);
-    element.download = "template.html";
-    element.click();
-  };
-
-  const exportHTML = () => {
-    const canvasJSON = canvas.toJSON();
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Canvas Download</title>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
-    </head>
-    <body>
-      <canvas id="canvas" width="800" height="600"></canvas>
-      <script>
-        const canvas = new fabric.Canvas('canvas');
-        
-        // Cargar los objetos del canvas desde el JSON
-        canvas.loadFromJSON(${JSON.stringify(
-          canvasJSON
-        )}, canvas.renderAll.bind(canvas));
-      </script>
-    </body>
-    </html>
-  `;
-    handleExport(htmlContent);
-  };
-
   return {
     canvas,
     setCanvas,
@@ -136,7 +98,7 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
     handleUndo,
     handleRedo,
     handleUploadImage,
-    exportHTML,
+
     handleUpdateHistory,
   };
 };

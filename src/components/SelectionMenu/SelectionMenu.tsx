@@ -1,19 +1,17 @@
 import { Paper } from "@mui/material";
 import CommonActions from "../CommonActions/CommonActions";
 import ColorPickerButton from "../CustomColorPicker/ColorPickerButton";
-import { Form } from "react-final-form";
+import { Field, Form } from "react-final-form";
+import {
+  BorderColor,
+  FormatColorFill,
+  FormatColorReset,
+} from "@mui/icons-material";
+import CustomStrokePicker from "../CustomStrokePicker/CustomStrokePicker";
+import { handleFormatChange } from "../../utils/handleFormatChange";
+import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
 
 const SelectionMenu = ({ canvas, type }: { canvas: any; type: string }) => {
-  const handleColorChange = (val: string) => {
-    const activeObj = canvas.getActiveObject();
-    activeObj &&
-      activeObj.set({
-        fill: val,
-      });
-    canvas.renderAll();
-  };
-
-  const handleUploadImage = (values: any) => {};
   return (
     <Paper
       elevation={1}
@@ -23,7 +21,45 @@ const SelectionMenu = ({ canvas, type }: { canvas: any; type: string }) => {
       {type !== "image" && (
         <Form
           onSubmit={() => {}}
-          render={() => <ColorPickerButton onChange={handleColorChange} />}
+          render={() => (
+            <>
+              {type !== "line" && (
+                <>
+                  <ColorPickerButton
+                    onChange={(val: any) =>
+                      handleFormatChange(canvas, "fill", val)
+                    }
+                    icon={<FormatColorFill />}
+                  />
+                  <Field
+                    name="transparent"
+                    component={CustomCheckbox}
+                    icon={<FormatColorReset />}
+                    tooltip="Fondo transparente"
+                    onChange={(val: any) =>
+                      handleFormatChange(
+                        canvas,
+                        "fill",
+                        val ? "transparent" : "#000"
+                      )
+                    }
+                  />
+                </>
+              )}
+
+              <CustomStrokePicker
+                onChange={(val: any) =>
+                  handleFormatChange(canvas, "strokeWidth", val)
+                }
+              />
+              <ColorPickerButton
+                icon={<BorderColor />}
+                onChange={(val: any) =>
+                  handleFormatChange(canvas, "stroke", val)
+                }
+              />
+            </>
+          )}
         />
       )}
     </Paper>

@@ -16,7 +16,7 @@ export const DROP_ITEMS = {
       left: 50,
       top: 50,
       strokeWidth: 1,
-      stroke: "#F00",
+      stroke: "#000",
     });
 
     return line;
@@ -25,9 +25,11 @@ export const DROP_ITEMS = {
     const rect = new fabric.Rect({
       left: 100,
       top: 100,
-      fill: "#0F0",
+      fill: "#00F",
       width: 100,
       height: 100,
+      strokeWidth: 3,
+      stroke: "red",
     });
 
     return rect;
@@ -36,7 +38,7 @@ export const DROP_ITEMS = {
     const circle = new fabric.Circle({
       left: 100,
       top: 100,
-      fill: "#00F",
+      fill: "#000",
       radius: 50,
     });
     return circle;
@@ -45,7 +47,7 @@ export const DROP_ITEMS = {
     const triangle = new fabric.Triangle({
       left: 100,
       top: 100,
-      fill: "#00F",
+      fill: "#000",
       width: 100,
       height: 100,
     });
