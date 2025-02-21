@@ -1,10 +1,15 @@
-import { FormatColorFill } from "@mui/icons-material";
 import { IconButton, Menu } from "@mui/material";
 import { Field } from "react-final-form";
 import CustomColorPicker from "./CustomColorPicker";
 import { useState } from "react";
 
-const ColorPickerButton = ({ onChange }: { onChange: any }) => {
+const ColorPickerButton = ({
+  onChange,
+  icon,
+}: {
+  onChange: any;
+  icon: any;
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,9 +21,7 @@ const ColorPickerButton = ({ onChange }: { onChange: any }) => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
-        <FormatColorFill />
-      </IconButton>
+      <IconButton onClick={handleClick}>{icon}</IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <Field
           name="color"

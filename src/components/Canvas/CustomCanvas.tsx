@@ -6,6 +6,7 @@ import { useDnD } from "../../common/hooks/useDnD";
 import CustomFileUpload from "../CustomFileUpload/CustomFileUpload";
 import TextEditor from "../TextEditor/TextEditor";
 import SelectionMenu from "../SelectionMenu/SelectionMenu";
+import { exportCanvasToStaticHTML } from "../../utils/exportHTML";
 
 const CustomCanvas = () => {
   const canvasRef = useRef<any>(null);
@@ -15,7 +16,7 @@ const CustomCanvas = () => {
   const {
     canvas,
     canvasHistory,
-    exportHTML,
+
     handleDelete,
     handleUndo,
     handleRedo,
@@ -110,10 +111,12 @@ const CustomCanvas = () => {
       >
         <canvas ref={canvasRef}></canvas>
       </Box>
-      <Button onClick={exportHTML}>Exportar HTML</Button>
+      <Button onClick={() => exportCanvasToStaticHTML({ canvas })}>
+        Exportar HTML
+      </Button>
       {selectedObject &&
         (selectedObject.type === "textbox" ? (
-          <TextEditor canvas={canvas} />
+          <TextEditor canvas={canvas} selectedObject={selectedObject} />
         ) : (
           <SelectionMenu canvas={canvas} type={selectedObject.type} />
         ))}

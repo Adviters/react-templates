@@ -1,4 +1,5 @@
 import { Box, TextField } from "@mui/material";
+import { JSX } from "@emotion/react/jsx-runtime";
 
 interface CustomTextInputProps {
   input: any;
@@ -9,40 +10,42 @@ interface CustomTextInputProps {
   showLabel?: boolean;
   disabled?: boolean;
   placeholder: string;
+  onChange?: (val: any) => void;
   sx?: any;
 }
 
-const CustomTextField = ({
+const CustomNumberInput = ({
   input,
   meta,
   label,
   required,
+  onChange,
   boxStyle,
   disabled,
-  showLabel = true,
-  placeholder,
-  sx = {},
   ...rest
-}: CustomTextInputProps) => {
+}: CustomTextInputProps): JSX.Element => {
+  const handleChange = (e: any) => {
+    if (onChange) onChange(e.target.value);
+    if (input?.onChange) input?.onChange(e.target.value);
+  };
   return (
     <Box>
       <TextField
         size="small"
+        type="number"
         variant="outlined"
         value={input?.value}
-        sx={sx}
         label={label}
-        onChange={input.onChange}
+        onChange={handleChange}
         error={(meta.touched || meta.modified) && meta.invalid ? true : false}
         helperText={
           (meta.touched || meta.modified) && meta.invalid && meta.error
         }
         disabled={disabled}
-        placeholder={placeholder}
         {...rest}
       />
     </Box>
   );
 };
 
-export default CustomTextField;
+export default CustomNumberInput;

@@ -3,23 +3,34 @@ import { Field, Form } from "react-final-form";
 import CustomSelect from "../CustomSelect/CustomSelect";
 import {
   FormatBold,
+  FormatColorFill,
   FormatItalic,
   FormatUnderlined,
 } from "@mui/icons-material";
 import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
 import CommonActions from "../CommonActions/CommonActions";
 import ColorPickerButton from "../CustomColorPicker/ColorPickerButton";
+import { handleFormatChange } from "../../utils/handleFormatChange";
+import { FabricText } from "fabric";
+import CustomNumberInput from "../CustomNumberInput/CustomNumberInput";
+import { FONT_OPTIONS } from "../../common/constants/texteditor.constants";
 
-const TextEditor = ({ canvas }: { canvas: any }) => {
-  const handleFormatChange = (key: string, value: any) => {
-    const text = canvas.getActiveObject();
-    text &&
-      text.set({
-        [key]: value,
-      });
-    canvas.fire("object:modified", { target: text });
-    canvas.renderAll();
+const TextEditor = ({
+  canvas,
+  selectedObject,
+}: {
+  canvas: any;
+  selectedObject: FabricText;
+}) => {
+  const initialValues = {
+    fontFamily: selectedObject.fontFamily,
+    fontSize: selectedObject.fontSize,
+    bold: selectedObject.fontWeight === "bold",
+    italic: selectedObject.fontStyle === "italic",
+    underline: selectedObject.underline,
+    color: selectedObject.fill,
   };
+
   return (
     <Box
       sx={{
@@ -36,51 +47,72 @@ const TextEditor = ({ canvas }: { canvas: any }) => {
     >
       <Form
         onSubmit={() => {}}
+        initialValues={initialValues}
         render={() => {
           return (
             <>
               <Field
                 name="fontFamily"
                 component={CustomSelect}
-                options={[{ label: "Arial", value: "Arial" }]}
-                onChange={(val: any) => handleFormatChange("fontFamily", val)}
+                options={FONT_OPTIONS.map((opt) => ({
+                  label: opt,
+                  value: opt,
+                }))}
+                onChange={(val: any) =>
+                  handleFormatChange(canvas, "fontFamily", val)
+                }
                 sx={{ width: "150px" }}
                 label={"Fuente"}
               />
 
               <Field
                 name="fontSize"
-                component={CustomSelect}
-                options={[{ label: 12, value: 12 }]}
-                onChange={(val: any) => handleFormatChange("fontSize", val)}
+                component={CustomNumberInput}
+                onChange={(val: any) =>
+                  handleFormatChange(canvas, "fontSize", val)
+                }
                 sx={{ width: "100px", marginLeft: 1.5 }}
                 label={"Tamaño"}
               />
               <Field
                 name="bold"
                 component={CustomCheckbox}
+                tooltip={"Negrita"}
                 icon={<FormatBold />}
                 onChange={(val: any) =>
-                  handleFormatChange("fontWeight", val ? "bold" : "normal")
+                  handleFormatChange(
+                    canvas,
+                    "fontWeight",
+                    val ? "bold" : "normal"
+                  )
                 }
               />
               <Field
                 name="italic"
                 component={CustomCheckbox}
                 icon={<FormatItalic />}
+                tooltip="Itálica"
                 onChange={(val: any) =>
-                  handleFormatChange("fontStyle", val ? "italic" : "normal")
+                  handleFormatChange(
+                    canvas,
+                    "fontStyle",
+                    val ? "italic" : "normal"
+                  )
                 }
               />
               <Field
-                name="underlined"
+                name="underline"
                 component={CustomCheckbox}
+                tooltip="Subrayado"
                 icon={<FormatUnderlined />}
-                onChange={(val: any) => handleFormatChange("underline", val)}
+                onChange={(val: any) =>
+                  handleFormatChange(canvas, "underline", val)
+                }
               />
 
               <ColorPickerButton
-                onChange={(val: any) => handleFormatChange("fill", val)}
+                onChange={(val: any) => handleFormatChange(canvas, "fill", val)}
+                icon={<FormatColorFill />}
               />
             </>
           );

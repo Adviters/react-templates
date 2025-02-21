@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Checkbox, Tooltip, Typography } from "@mui/material";
 
 const CustomCheckbox = ({
   input,
@@ -6,6 +6,7 @@ const CustomCheckbox = ({
   checkedIcon,
   label = "",
   onChange,
+  tooltip,
   ...rest
 }: any) => {
   return (
@@ -15,19 +16,21 @@ const CustomCheckbox = ({
         gap: "5px",
       }}
     >
-      <Checkbox
-        checked={Boolean(input?.value)}
-        size="small"
-        //sx={checkBoxStyle}
-        value={input?.value}
-        onChange={(e) => {
-          input.onChange(e);
-          onChange && onChange(e.target.checked);
-        }}
-        icon={icon}
-        checkedIcon={checkedIcon ?? icon}
-        {...rest}
-      />
+      <Tooltip title={tooltip}>
+        <Checkbox
+          checked={Boolean(input?.value)}
+          size="small"
+          //sx={checkBoxStyle}
+          value={input?.value}
+          onChange={(e) => {
+            input.onChange(e);
+            onChange && onChange(e.target.checked);
+          }}
+          icon={icon}
+          checkedIcon={checkedIcon ?? icon}
+          {...rest}
+        />
+      </Tooltip>
       <Typography sx={{ fontSize: 14 }}>
         {label ?? input?.name?.split(".")[1] ?? input?.name}
       </Typography>
