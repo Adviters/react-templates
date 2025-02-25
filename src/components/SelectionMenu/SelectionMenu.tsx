@@ -10,12 +10,29 @@ import {
 import CustomStrokePicker from "../CustomStrokePicker/CustomStrokePicker";
 import { handleFormatChange } from "../../utils/handleFormatChange";
 import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
+import { ICoords } from "../../common/interfaces/coords.interface";
+import { FabricObject } from "fabric";
 
-const SelectionMenu = ({ canvas, type }: { canvas: any; type: string }) => {
+const SelectionMenu = ({
+  canvas,
+  type,
+  coords,
+  selectedObject,
+}: {
+  canvas: any;
+  type: string;
+  coords: ICoords;
+  selectedObject: FabricObject;
+}) => {
   return (
     <Paper
       elevation={1}
-      sx={{ position: "absolute", top: 200, right: 600, display: "flex" }}
+      sx={{
+        position: "absolute",
+        top: coords.top + selectedObject.height * selectedObject.scaleY + 50,
+        left: coords.left,
+        display: "flex",
+      }}
     >
       <CommonActions canvas={canvas} />
       {type !== "image" && (

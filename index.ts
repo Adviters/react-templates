@@ -1,3 +1,3 @@
-import App from "./src/App";
+import TemplateCanvas from "./src/components/TemplateCanvas/TemplateCanvas";
 
-export default App;
+export default TemplateCanvas;
