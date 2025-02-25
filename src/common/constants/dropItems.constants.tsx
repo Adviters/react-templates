@@ -25,11 +25,9 @@ export const DROP_ITEMS = {
     const rect = new fabric.Rect({
       left: 100,
       top: 100,
-      fill: "#00F",
+      fill: "#000",
       width: 100,
       height: 100,
-      strokeWidth: 3,
-      stroke: "red",
     });
 
     return rect;

@@ -14,13 +14,16 @@ import { handleFormatChange } from "../../utils/handleFormatChange";
 import { FabricText } from "fabric";
 import CustomNumberInput from "../CustomNumberInput/CustomNumberInput";
 import { FONT_OPTIONS } from "../../common/constants/texteditor.constants";
+import { ICoords } from "../../common/interfaces/coords.interface";
 
 const TextEditor = ({
   canvas,
   selectedObject,
+  coords,
 }: {
   canvas: any;
   selectedObject: FabricText;
+  coords: ICoords;
 }) => {
   const initialValues = {
     fontFamily: selectedObject.fontFamily,
@@ -41,8 +44,8 @@ const TextEditor = ({
         borderRadius: "5px",
         boxShadow: "0px 0px 2px black",
         position: "absolute",
-        top: 200,
-        right: 100,
+        top: coords.top + selectedObject.height * selectedObject.scaleY + 50,
+        left: coords.left,
       }}
     >
       <Form
