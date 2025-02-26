@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas } from "fabric";
-import { Box, Button } from "@mui/material";
+
+import { Box } from "@mui/material";
 import { useCanvas } from "../../common/hooks/useCanvas";
 import { useDnD } from "../../common/hooks/useDnD";
 import CustomFileUpload from "../CustomFileUpload/CustomFileUpload";
@@ -10,6 +11,9 @@ import { exportCanvasToStaticHTML } from "../../utils/exportHTML";
 import TextSuggestions from "../TextSuggestions/TextSuggestions";
 import { ICoords } from "../../common/interfaces/coords.interface";
 import { ITextSuggestions } from "../../common/interfaces/textSuggestions.interface";
+import { canvasToHTML } from "../../utils/canvasSerializer";
+import HtmlPreviewModal from "../HtmlPreviewModal/HtmlPreviewModal";
+import CanvasOutputActions from "../CanvasOutputActions/CanvasOutputActions";
 
 const CustomCanvas = ({
   textSuggestions,
@@ -20,6 +24,7 @@ const CustomCanvas = ({
   const [open, setOpen] = useState(false);
   const [selectedObject, setSelectedObject] = useState<any>(null);
   const coords = useRef<ICoords>({ left: 200, top: 300 });
+  const [previewOutput, setPreviewOutput] = useState<string | undefined>();
 
   const {
     canvas,
@@ -125,9 +130,10 @@ const CustomCanvas = ({
       >
         <canvas ref={canvasRef}></canvas>
       </Box>
-      <Button onClick={() => exportCanvasToStaticHTML({ canvas })}>
-        Exportar HTML
-      </Button>
+      <CanvasOutputActions
+        handleOnExport={() => exportCanvasToStaticHTML(canvas)}
+        handleOnPreview={() => setPreviewOutput(canvasToHTML(canvas))}
+      />
       {selectedObject &&
         (selectedObject.type === "textbox" ? (
           <>
@@ -159,6 +165,11 @@ const CustomCanvas = ({
         open={open}
         setOpen={setOpen}
         handleUploadImage={handleUploadImage}
+      />
+
+      <HtmlPreviewModal
+        previewOutput={previewOutput}
+        handleClose={() => setPreviewOutput(undefined)}
       />
     </Box>
   );
