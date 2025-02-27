@@ -141,7 +141,9 @@ const CustomCanvas = ({
       <CanvasOutputActions
         handleOnExport={() => exportCanvasToStaticHTML(canvas)}
         handleOnPreview={() => setPreviewOutput(canvasToHTML(canvas))}
-        handleOnSave={onSave ? () => onSave(canvas) : undefined}
+        handleOnSave={
+          onSave ? () => onSave(canvas, canvasToHTML(canvas)) : undefined
+        }
       />
       {selectedObject &&
         (selectedObject.type === "textbox" ? (

@@ -4,7 +4,7 @@ export interface ICanvasProps {
   textSuggestions?: ITextSuggestions;
   width?: number;
   height?: number;
-  onSave?: (canvas: any) => void;
+  onSave?: (canvas: any, html: string) => void;
   initialValue?: any;
 }
 
