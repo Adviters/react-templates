@@ -10,16 +10,18 @@ import SelectionMenu from "../SelectionMenu/SelectionMenu";
 import { exportCanvasToStaticHTML } from "../../utils/exportHTML";
 import TextSuggestions from "../TextSuggestions/TextSuggestions";
 import { ICoords } from "../../common/interfaces/coords.interface";
-import { ITextSuggestions } from "../../common/interfaces/textSuggestions.interface";
 import { canvasToHTML } from "../../utils/canvasSerializer";
 import HtmlPreviewModal from "../HtmlPreviewModal/HtmlPreviewModal";
 import CanvasOutputActions from "../CanvasOutputActions/CanvasOutputActions";
+import { ICanvasProps } from "../../common/interfaces/canvas.interface";
 
 const CustomCanvas = ({
   textSuggestions,
-}: {
-  textSuggestions?: ITextSuggestions;
-}) => {
+  width = 900,
+  height = 550,
+  initialValue,
+  onSave,
+}: ICanvasProps) => {
   const canvasRef = useRef<any>(null);
   const [open, setOpen] = useState(false);
   const [selectedObject, setSelectedObject] = useState<any>(null);
@@ -36,19 +38,19 @@ const CustomCanvas = ({
     setCanvas,
     setCanvasHistory,
     handleUpdateHistory,
+    loadPreviousTemplate,
   } = useCanvas({ setOpen });
 
   const { drop } = useDnD({ canvas, setOpen });
 
   useEffect(() => {
     const canvasFabric = new Canvas(canvasRef.current, {
-      width: 900,
-      height: 550,
+      width: width,
+      height: height,
       backgroundColor: "white",
       preserveObjectStacking: true,
     });
-    setCanvas(canvasFabric);
-    setCanvasHistory([canvasFabric.toJSON()]);
+
     canvasFabric.on("selection:created", ({ selected }) => {
       setSelectedObject(selected[0]);
       coords.current = { left: selected[0].left, top: selected[0].top };
@@ -67,6 +69,12 @@ const CustomCanvas = ({
       const { left, top } = e.target;
       coords.current = { left, top };
     });
+
+    if (initialValue) loadPreviousTemplate(canvasFabric, initialValue);
+    else {
+      setCanvas(canvasFabric);
+      setCanvasHistory([canvasFabric.toJSON()]);
+    }
 
     return () => {
       canvasFabric.dispose();
@@ -125,7 +133,7 @@ const CustomCanvas = ({
         style={{
           border: "2px dashed #ccc",
           margin: "10px 0",
-          minHeight: "550px",
+          minHeight: height,
         }}
       >
         <canvas ref={canvasRef}></canvas>
@@ -133,6 +141,7 @@ const CustomCanvas = ({
       <CanvasOutputActions
         handleOnExport={() => exportCanvasToStaticHTML(canvas)}
         handleOnPreview={() => setPreviewOutput(canvasToHTML(canvas))}
+        handleOnSave={onSave ? () => onSave(canvas) : undefined}
       />
       {selectedObject &&
         (selectedObject.type === "textbox" ? (
@@ -168,6 +177,8 @@ const CustomCanvas = ({
       />
 
       <HtmlPreviewModal
+        height={height}
+        width={width}
         previewOutput={previewOutput}
         handleClose={() => setPreviewOutput(undefined)}
       />

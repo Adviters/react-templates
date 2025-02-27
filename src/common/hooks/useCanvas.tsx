@@ -1,11 +1,21 @@
 import { useRef, useState } from "react";
-import { FabricImage } from "fabric";
+import { Canvas, FabricImage } from "fabric";
 
 export const useCanvas = ({ setOpen }: { setOpen: any }) => {
   const [canvas, setCanvas] = useState<any>(null);
   const [canvasHistory, setCanvasHistory] = useState<any[]>([]);
   const [redoHistory, setRedoHistory] = useState<any[]>([]);
   const isUndoOrRedo = useRef(false);
+
+  const loadPreviousTemplate = async (
+    canvasFabric: Canvas,
+    prevCanvasJSON: any
+  ) => {
+    const prevCanvasTemplate = await canvasFabric.loadFromJSON(prevCanvasJSON);
+    prevCanvasTemplate.renderAll();
+    setCanvas(prevCanvasTemplate);
+    setCanvasHistory([prevCanvasJSON]);
+  };
 
   const handleDelete = (e: KeyboardEvent) => {
     if (e.key === "Delete" || e.key === "Backspace") {
@@ -98,7 +108,7 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
     handleUndo,
     handleRedo,
     handleUploadImage,
-
+    loadPreviousTemplate,
     handleUpdateHistory,
   };
 };
