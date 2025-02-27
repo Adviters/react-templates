@@ -142,7 +142,9 @@ const CustomCanvas = ({
         handleOnExport={() => exportCanvasToStaticHTML(canvas)}
         handleOnPreview={() => setPreviewOutput(canvasToHTML(canvas))}
         handleOnSave={
-          onSave ? () => onSave(canvas, canvasToHTML(canvas)) : undefined
+          onSave
+            ? () => onSave(canvas.toJSON(), canvasToHTML(canvas))
+            : undefined
         }
       />
       {selectedObject &&
