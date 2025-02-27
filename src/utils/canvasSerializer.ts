@@ -21,6 +21,8 @@ export const canvasToHTML = (canvas: any): string => {
                     font-weight: ${
                       obj.fontWeight === "bold" ? "bold" : "normal"
                     };
+                    transform-origin: 0 0;
+                    transform: rotate(${obj.angle}deg) scaleY(${obj.scaleY});
                     text-decoration: ${obj.underline ? "underline" : "none"};
                     color: ${obj.fill};">
                     ${obj.text}
@@ -33,6 +35,8 @@ export const canvasToHTML = (canvas: any): string => {
                     left: ${left}px; 
                     top: ${top}px; 
                     width: ${obj.width * obj.scaleX}px;
+                    transform-origin: 0 0;
+                    transform: rotate(${obj.angle}deg);
                     height: ${obj.height * obj.scaleY}px;">
             `;
     } else if (obj.type === "rect") {
@@ -45,6 +49,7 @@ export const canvasToHTML = (canvas: any): string => {
                     height: ${obj.height * obj.scaleY}px; 
                     background: ${obj.fill}; 
                     border: ${obj.strokeWidth}px solid ${obj.stroke}; 
+                    transform-origin: 0 0;
                     transform: rotate(${obj.angle}deg);">
                 </div>
             `;
@@ -58,7 +63,8 @@ export const canvasToHTML = (canvas: any): string => {
                     height: ${obj.height * obj.scaleY}px; 
                     background: ${obj.fill}; 
                     border-radius: 50%; 
-                    border: ${obj.strokeWidth}px solid ${obj.stroke}; 
+                    border: ${obj.strokeWidth}px solid ${obj.stroke};
+                    transform-origin: 0 0;
                     transform: rotate(${obj.angle}deg);">
                 </div>
             `;
@@ -72,23 +78,35 @@ export const canvasToHTML = (canvas: any): string => {
                     height: 0;
                     border-left: ${obj.width / 2}px solid transparent;
                     border-right: ${obj.width / 2}px solid transparent;
-                    border-bottom: ${obj.height}px solid ${obj.fill}; 
+                    border-bottom: ${obj.height}px solid ${obj.fill};
+                    transform-origin: 0 0;
                     transform: rotate(${obj.angle}deg);">
                 </div>
             `;
     } else if (obj.type === "line") {
-      const { left, top, x1, y1, x2, y2, strokeWidth, stroke } = obj;
+      const {
+        left,
+        top,
+        x1,
+        y1,
+        x2,
+        y2,
+        strokeWidth,
+        stroke,
+        angle,
+        scaleX,
+        scaleY,
+      } = obj;
       const width = Math.abs(x2 - x1);
       const height = Math.abs(y2 - y1);
-      const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
 
       htmlElements += `
                 <div style="
                     position: absolute;
                     left: ${left}px; 
                     top: ${top}px;
-                    width: ${width}px; 
-                    height: ${height}px; 
+                    width: ${width * scaleX}px; 
+                    height: ${height * scaleY}px; 
                     border-top: ${strokeWidth} solid ${stroke};
                     transform: rotate(${angle}deg);
                     transform-origin: 0 0;
