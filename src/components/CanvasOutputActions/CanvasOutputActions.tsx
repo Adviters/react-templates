@@ -10,12 +10,12 @@ const CanvasOutputActions = ({
   handleOnPreview,
 }: CanvasOutputActionsProps) => {
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} justifyContent={"flex-end"}>
+      <Button variant="outlined" onClick={handleOnPreview}>
+        Previsualizar HTML
+      </Button>
       <Button variant="contained" onClick={handleOnExport}>
         Exportar HTML
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleOnPreview}>
-        Preview HTML
       </Button>
     </Stack>
   );
