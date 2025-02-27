@@ -11,10 +11,18 @@ export const useCanvas = ({ setOpen }: { setOpen: any }) => {
     canvasFabric: Canvas,
     prevCanvasJSON: any
   ) => {
-    const prevCanvasTemplate = await canvasFabric.loadFromJSON(prevCanvasJSON);
-    prevCanvasTemplate.renderAll();
-    setCanvas(prevCanvasTemplate);
-    setCanvasHistory([prevCanvasJSON]);
+    if (!prevCanvasJSON || !canvasFabric) return;
+    try {
+      const prevCanvasTemplate = await canvasFabric.loadFromJSON(
+        prevCanvasJSON
+      );
+      prevCanvasTemplate.renderAll();
+      setCanvas(prevCanvasTemplate);
+      setCanvasHistory([prevCanvasJSON]);
+    } catch (error) {
+      console.log("Hubo un error al carga el valor inicial.");
+      setCanvas(canvasFabric);
+    }
   };
 
   const handleDelete = (e: KeyboardEvent) => {
