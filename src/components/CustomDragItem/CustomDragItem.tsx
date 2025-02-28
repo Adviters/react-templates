@@ -45,10 +45,8 @@ const DragItem = ({ type, label, icon }: IDragItemProps) => {
             margin: "15px",
             border: "1px solid #ccc",
             borderRadius: "5px",
-
             display: "flex",
             alignItems: "center",
-            maxWidth: "1.5rem",
           }}
         >
           {icon}
