@@ -1,5 +1,5 @@
-// src/App.tsx
 import React from "react";
+
 import TemplateCanvas from "./components/TemplateCanvas/TemplateCanvas";
 
 const App: React.FC = () => {
