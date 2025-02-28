@@ -79,6 +79,8 @@ const CustomCanvas = ({
   }, []);
 
   useEffect(() => {
+    console.log("modificación");
+
     if (initialValue) loadPreviousTemplate(canvas, initialValue);
   }, [initialValue]);
 
