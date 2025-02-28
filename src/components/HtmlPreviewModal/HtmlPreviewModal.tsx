@@ -21,7 +21,10 @@ const HtmlPreviewModal = ({
   if (!showModal) return null;
   return (
     <CustomModal isOpen={showModal} handleOnClose={handleClose}>
-      <iframe srcDoc={previewOutput} style={getIFrameStyle(width, height)} />
+      <iframe
+        srcDoc={previewOutput}
+        style={getIFrameStyle(width + 2, height + 2)}
+      />
     </CustomModal>
   );
 };
