@@ -33,7 +33,7 @@ const TextSuggestions = ({
         {suggestions &&
           suggestions.map((sugg) => (
             <MenuItem key={sugg} onClick={() => handleSelectWord(sugg)}>
-              {sugg}
+              {sugg.slice(1, -1)}
             </MenuItem>
           ))}
       </Paper>

@@ -38,14 +38,13 @@ const TextEditor = ({
     <Box
       sx={{
         display: "flex",
-        maxWidth: "510px",
         backgroundColor: "#fff",
         padding: 2,
         borderRadius: "5px",
         boxShadow: "0px 0px 2px black",
         position: "absolute",
         top: coords.top + selectedObject.height * selectedObject.scaleY + 50,
-        left: coords.left,
+        left: coords.left + 100,
       }}
     >
       <Form

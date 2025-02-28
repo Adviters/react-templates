@@ -70,16 +70,17 @@ const CustomCanvas = ({
       coords.current = { left, top };
     });
 
-    if (initialValue) loadPreviousTemplate(canvasFabric, initialValue);
-    else {
-      setCanvas(canvasFabric);
-      setCanvasHistory([canvasFabric.toJSON()]);
-    }
+    setCanvas(canvasFabric);
+    setCanvasHistory([canvasFabric.toJSON()]);
 
     return () => {
       canvasFabric.dispose();
     };
   }, []);
+
+  useEffect(() => {
+    if (initialValue) loadPreviousTemplate(canvas, initialValue);
+  }, [initialValue]);
 
   useEffect(() => {
     canvas &&
@@ -134,6 +135,7 @@ const CustomCanvas = ({
           border: "2px dashed #ccc",
           margin: "10px 0",
           minHeight: height,
+          position: "relative",
         }}
       >
         <canvas ref={canvasRef}></canvas>

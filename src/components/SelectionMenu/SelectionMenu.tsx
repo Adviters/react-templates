@@ -30,7 +30,7 @@ const SelectionMenu = ({
       sx={{
         position: "absolute",
         top: coords.top + selectedObject.height * selectedObject.scaleY + 50,
-        left: coords.left,
+        left: coords.left + 300,
         display: "flex",
       }}
     >
