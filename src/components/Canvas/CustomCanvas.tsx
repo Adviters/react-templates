@@ -27,6 +27,7 @@ const CustomCanvas = ({
   const [selectedObject, setSelectedObject] = useState<any>(null);
   const coords = useRef<ICoords>({ left: 200, top: 300 });
   const [previewOutput, setPreviewOutput] = useState<string | undefined>();
+  const [hasLoadedInitialValue, setHasLoadedInitialValue] = useState(false);
 
   const {
     canvas,
@@ -79,9 +80,10 @@ const CustomCanvas = ({
   }, []);
 
   useEffect(() => {
-    console.log("modificación");
-
-    if (initialValue) loadPreviousTemplate(canvas, initialValue);
+    if (initialValue && !hasLoadedInitialValue) {
+      loadPreviousTemplate(canvas, initialValue);
+      setHasLoadedInitialValue(true);
+    }
   }, [initialValue]);
 
   useEffect(() => {
