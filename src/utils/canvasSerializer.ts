@@ -47,16 +47,8 @@ const getFinalHTMLSerialized = (
 };
 
 export const canvasToHTML = (canvas: any): string => {
-  const objects = canvas.getObjects();
-  let htmlElements = "";
   const canvasWidth = canvas.width;
   const canvasHeight = canvas.height;
-
-  objects.forEach((obj: any) => {
-    const canvasType: CanvasElement = obj.type;
-    const serializerFunction = CANVAS_ELEMENT_SERIALIZER_FUNCTIONS[canvasType];
-    htmlElements += serializerFunction(obj);
-  });
-
-  return getFinalHTMLSerialized(canvasWidth, canvasHeight, htmlElements);
+  const svgOutput = canvas.toSVG();
+  return getFinalHTMLSerialized(canvasWidth, canvasHeight, svgOutput);
 };
