@@ -1,7 +1,7 @@
 {
   "name": "react-templates-dnd",
   "private": false,
-  "version": "1.1.5",
+  "version": "1.1.6",
   "type": "module",
   "main": "dist/react-templates-dnd.umd.js",
   "module": "dist/react-templates-dnd.es.js",
