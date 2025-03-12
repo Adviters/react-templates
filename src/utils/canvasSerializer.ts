@@ -1,25 +1,3 @@
-import { CanvasElement } from "../common/types/canvas-elements";
-import {
-  canvasCircleToHTML,
-  canvasImageToHTML,
-  canvasLineToHTML,
-  canvasRectangleToHTML,
-  canvasTextboxToHTML,
-  canvasTriangleToHTML,
-} from "./elementSerializer";
-
-const CANVAS_ELEMENT_SERIALIZER_FUNCTIONS: Record<
-  CanvasElement,
-  (canvasElement: any) => string
-> = {
-  textbox: canvasTextboxToHTML,
-  image: canvasImageToHTML,
-  rect: canvasRectangleToHTML,
-  circle: canvasCircleToHTML,
-  triangle: canvasTriangleToHTML,
-  line: canvasLineToHTML,
-};
-
 const getFinalHTMLSerialized = (
   canvasWidth: number,
   canvasHeight: number,
